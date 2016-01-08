@@ -1,0 +1,32 @@
+from bs4 import BeautifulSoup
+import requests
+import lxml
+import time
+headers={
+    'User-Agent':'Mozilla/5.0 (iPhone; CPU iPhone OS 8_0 like Mac OS X) AppleWebKit/600.1.3 (KHTML, like Gecko) Version/8.0 Mobile/12A4345d Safari/600.1.4',
+    'Cookie':'zzdetail_mask=1; bj58_id58s="MW5mPU5yS0xMS1RNMjMwMQ=="; sessionid=4bd3a53e-2bd0-4f6b-a741-c293cab7dfca; id58=c5/njVaPLjRYwmGDDkD0Ag==; als=0; ipcity=taizhou%7C%u6CF0%u5DDE; myfeet_tooltip=end; final_history=24604421791680%2C24505954835394%2C24605293565492%2C24405336377656; cookieuid=80878d52-8a06-47c5-8bac-e26ca7b2dda3; HISTORY_CATE_IDS=5%2C38484%2C23094%7C%E5%B9%B3%E6%9D%BF%E7%94%B5%E8%84%91%7C2%7C2073; scancat=38484; m58comvp=t08v115.159.229.21; sale_finalpage_app_open=2; 58app_hide=1; mcity=bj; mcityName=%E5%8C%97%E4%BA%AC; nearCity=%5B%7B%22cityName%22%3A%22%E5%8C%97%E4%BA%AC%22%2C%22city%22%3A%22bj%22%7D%5D; bj58_new_session=0; bj58_init_refer="http://m.58.com/bj/pbdn/?reform=pcfront&PGTID=0d100000-0000-1121-f41b-137aeef068b7&ClickID=6"; bj58_new_uv=4; device=m; bbsession_uid=1080863913550022424; bbsession_sen=2e61cbc0f96132aca5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5bda21514a5a5a5aa60ef2af306050a4dd6ef4fe5c8258cf0; 58tj_uuid=bd23ace3-2a65-4203-91e3-ffb32898542c; new_session=0; init_refer=http%253A%252F%252Fm.58.com%252Fbj%252Fpbdn%252F%253Freform%253Dpcfront%2526PGTID%253D0d100000-0000-1121-f41b-137aeef068b7%2526ClickID%253D6; new_uv=4'
+}
+
+#####抓取手机分类页面中所有的标题链接#############
+url='http://m.58.com/bj/pbdn/?reform=pcfront&PGTID=0d100000-0000-1121-f41b-137aeef068b7&ClickID=6'
+web_data=requests.get(url)
+soup=BeautifulSoup(web_data.text,'lxml')
+title_urls=soup.select('body > div.body_div > div.infolst_w > ul > li > a')
+for single_url in title_urls:
+    single_url={
+        'single_url':single_url.get('href')
+            }
+
+#####抓取手机分类页面中所有的标题链接#############
+
+
+
+#####抓取详情页产品信息#############
+url='http://m.zhuanzhuan.58.com/Mzhuanzhuan/listing/detail.html?infoId=685294824336113666&amp;cateId=2103001&amp;fullCate=5,38484,23094&amp;fullLocal=1'
+web_data=requests.get(url,headers=headers)
+soup=BeautifulSoup(web_data.text,'lxml')
+title=soup.select('div.miaoshu')
+price=soup.select('div.content > div.good_info > p.attr_price > span')
+
+#####抓取详情页产品信息#############
+
